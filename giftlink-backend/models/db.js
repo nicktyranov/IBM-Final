@@ -21,9 +21,7 @@ async function connectToDatabase() {
 	const collection = db.collection('gifts');
 	dbInstance = collection;
 	const data = await collection.find({}).toArray();
-	console.log('Documents:', data);
 	return dbInstance;
 }
-connectToDatabase();
 
 module.exports = connectToDatabase;
