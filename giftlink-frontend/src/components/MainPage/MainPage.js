@@ -6,10 +6,10 @@ function MainPage() {
 	const [gifts, setGifts] = useState([]);
 	const navigate = useNavigate();
 
-	useEffect(async () => {
+	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				let url = urlConfig + '/api/gifts';
+				let url = urlConfig.backendUrl + '/api/gifts';
 				const req = await fetch(url);
 				if (!req.ok) {
 					throw new Error('Could not fetch data from the server: ' + req.status);
@@ -36,9 +36,11 @@ function MainPage() {
 	};
 
 	const formatDate = (timestamp) => {
-		return new Intl.DateTimeFormat(
-			('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(timestamp))
-		);
+		return new Intl.DateTimeFormat('en-US', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		}).format(new Date(timestamp * 1000));
 	};
 
 	const getConditionClass = (condition) => {
@@ -48,12 +50,17 @@ function MainPage() {
 	return (
 		<div className="container mt-5">
 			<div className="row">
-				{gifts.map((gift) => (
+				{gifts.map((gift, index) => (
 					<div key={gift.id} className="col-md-4 mb-4">
 						<div className="card product-card">
 							<div className="image-placeholder">
 								{gift.image ? (
-									<img src={gift.image} alt={gift.name} className="card-img-top" />
+									<img
+										src={gift.image}
+										alt={gift.name}
+										className="card-img-top"
+										loading={index === 0 ? 'eager' : 'lazy'}
+									/>
 								) : (
 									<div className="no-image-available">No Image Available</div>
 								)}
