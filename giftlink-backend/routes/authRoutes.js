@@ -49,4 +49,31 @@ router.post('/register', async (req, res) => {
 	}
 });
 
+router.post('/login', async (req, res) => {
+	try {
+		const db = await connectToDatabase();
+		const collection = db.collection('users');
+		// Task 3: Check for user credentials in database
+		const user = await collection.findOne({ email: req.body.email });
+		const isValidCredentials = await bcryptjs.compare(req.body.password, user.password);
+		if (!user || !isValidCredentials) {
+			logger.error('Passwords do not match');
+			return res.status(400).send('Invalid email or password');
+		}
+
+		const userName = user.firstName;
+		const userEmail = user.email;
+
+		const payload = {
+			user: {
+				id: user._id.toString()
+			}
+		};
+		const authtoken = jwt.sign(payload, JWT_SECRET);
+		res.json({ authtoken, userName, userEmail });
+	} catch (e) {
+		return res.status(500).send('Internal server error');
+	}
+});
+
 module.exports = router;
