@@ -53,11 +53,13 @@ router.post('/login', async (req, res) => {
 	try {
 		const db = await connectToDatabase();
 		const collection = db.collection('users');
-		// Task 3: Check for user credentials in database
 		const user = await collection.findOne({ email: req.body.email });
+		if (!user) {
+			return res.status(404).send('User not found');
+		}
 		const isValidCredentials = await bcryptjs.compare(req.body.password, user.password);
 		if (!user || !isValidCredentials) {
-			logger.error('Passwords do not match');
+			logger.error('Invalid email or password');
 			return res.status(400).send('Invalid email or password');
 		}
 
@@ -70,7 +72,7 @@ router.post('/login', async (req, res) => {
 			}
 		};
 		const authtoken = jwt.sign(payload, JWT_SECRET);
-		res.json({ authtoken, userName, userEmail });
+		res.status(200).json({ authtoken, userName, userEmail });
 	} catch (e) {
 		return res.status(500).send('Internal server error');
 	}
