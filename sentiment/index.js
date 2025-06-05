@@ -1,3 +1,4 @@
+/* jshint esversion: 8 */
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
@@ -28,7 +29,6 @@ app.post('/sentiment', async (req, res) => {
 		const analysisResult = analyzer.getSentiment(sentence.split(' '));
 		let sentiment = 'neutral';
 
-		// Task 5: set sentiment to negative or positive based on score rules
 		if (analysisResult < 0) {
 			sentiment = 'negative';
 		} else if (0 <= analysisResult && analysisResult <= 0.33) {

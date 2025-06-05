@@ -1,3 +1,4 @@
+/* jshint esversion: 8 */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
@@ -37,7 +38,6 @@ const Profile = () => {
 			}
 		} catch (error) {
 			console.error(error);
-			// Handle error case
 		}
 	};
 
@@ -87,12 +87,10 @@ const Profile = () => {
 					navigate('/');
 				}, 1000);
 			} else {
-				// Handle error case
 				throw new Error('Failed to update profile');
 			}
 		} catch (error) {
 			console.error(error);
-			// Handle error case
 		}
 	};
 
@@ -102,12 +100,7 @@ const Profile = () => {
 				<form onSubmit={handleSubmit}>
 					<label>
 						Email
-						<input
-							type="email"
-							name="email"
-							value={userDetails.email}
-							disabled // Disable the email field
-						/>
+						<input type="email" name="email" value={userDetails.email} disabled />
 					</label>
 					<label>
 						Name

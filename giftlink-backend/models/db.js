@@ -1,33 +1,4 @@
-// require('dotenv').config();
-// const { readFileSync } = require('fs');
-// const { MongoClient } = require('mongodb');
-
-// const url = process.env.MONGO_URL;
-// const dbName = 'giftLinkApp';
-
-// let dbInstance = null;
-
-// async function connectToDatabase() {
-// 	if (dbInstance) {
-// 		return dbInstance;
-// 	}
-
-// 	const client = new MongoClient(url);
-// 	await client.connect();
-
-// 	const db = client.db(dbName);
-// 	dbInstance = db;
-// 	if ((await client.db(dbName).collection('gifts').countDocuments()) === 0) {
-// 		let data = readFileSync('./util/import-mongo/gifts.json', 'utf8');
-// 		await client.db(dbName).collection('gifts').insertMany(data);
-// 		console.log('✅ Imported gifts data');
-// 	}
-// 	console.log('✅ Connected to MongoDB');
-// 	return db;
-// }
-
-// module.exports = connectToDatabase;
-
+/* jshint esversion: 8 */
 require('dotenv').config();
 const { readFileSync } = require('fs');
 const { MongoClient } = require('mongodb');
