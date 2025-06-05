@@ -76,7 +76,7 @@ export default function Navbar() {
 											style={{ color: 'black', cursor: 'pointer' }}
 											onClick={profileSecton}
 										>
-											Welcome, {userName}
+											Welcome, {userName} (My Profile)
 										</span>
 									</li>
 									<li className="nav-item">

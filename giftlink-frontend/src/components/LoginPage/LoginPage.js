@@ -19,10 +19,6 @@ function LoginPage() {
 		}
 	}, [navigate]);
 
-	if (error) {
-		return <div className="alert alert-danger">{error}</div>;
-	}
-
 	const handleLogin = async () => {
 		console.log(`Email: ${email}`);
 		console.log(`Password: ${password}`);
@@ -40,6 +36,7 @@ function LoginPage() {
 			});
 			if (!response.ok) {
 				const errorText = await response.text();
+				setError(`user or password are incorrect`);
 				throw new Error(`Error ${response.status}: ${errorText}`);
 			}
 
@@ -61,6 +58,7 @@ function LoginPage() {
 			}
 		} catch (e) {
 			console.log('Error fetching details: ' + e.message);
+			setError(e.message);
 		}
 	};
 
@@ -70,17 +68,7 @@ function LoginPage() {
 				<div className="col-md-6 col-lg-4">
 					<div className="login-card p-4 border rounded">
 						<h2 className="text-center mb-4 font-weight-bold">Login</h2>
-						<span
-							style={{
-								color: 'red',
-								height: '.5cm',
-								display: 'block',
-								fontStyle: 'italic',
-								fontSize: '12px'
-							}}
-						>
-							{error}
-						</span>
+						<span style={{ color: 'red', textAlign: 'center' }}>{error}</span>
 						<label htmlFor="email" className="form label">
 							Email:
 						</label>
